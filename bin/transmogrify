@@ -8,14 +8,11 @@
 # Example usage:
 # ./transmogrify "http://www.youtube.com/watch?v=_VYggjoRb4o"
 
-address=$1
-regex='v=(.*)'
-
-if [[ $address =~ $regex ]]; then
-    filename=$(youtube-dl --get-filename $address)
+if [[ $1 =~ v=(.*) ]]; then
+    filename=$(youtube-dl --get-filename $1)
     title=${filename%.*}
 
-    youtube-dl $address
+    youtube-dl $1
     ffmpeg -i "$filename" "$title".wav && rm "$filename"
     lame "$title".wav "$title".mp3 && rm "$title".wav
 fi

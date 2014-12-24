@@ -1,8 +1,7 @@
 transmogrify
 ===========
 
-Simple script to download a YouTube video, extract the audio, and convert it to
-an mp3.
+Simple script to convert a YouTube video into an mp3.
 
 Requires `youtube-dl`, `ffmpeg`, and `lame`.
 

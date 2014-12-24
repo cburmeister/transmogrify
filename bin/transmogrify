@@ -16,9 +16,6 @@ if [[ $address =~ $regex ]]; then
     title=${filename%.*}
 
     youtube-dl $address
-    ffmpeg -i "$filename" "$title".wav
-    lame "$title".wav "$title".mp3
-
-    rm "$filename"
-    rm "$title".wav
+    ffmpeg -i "$filename" "$title".wav && rm "$filename"
+    lame "$title".wav "$title".mp3 && rm "$title".wav
 fi

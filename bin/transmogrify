@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Simple script to download a YouTube video, extract the audio, and convert it
+# to an mp3.
+#
+# Requires youtube-dl, ffmpeg, and lame.
+#
+# Example usage:
+# ./transmogrify "http://www.youtube.com/watch?v=_VYggjoRb4o"
+
+address=$1
+regex='v=(.*)'
+
+if [[ $address =~ $regex ]]; then
+    filename=$(youtube-dl --get-filename $address)
+    new_title=${filename%.*}
+
+    youtube-dl $address
+    ffmpeg -i "$filename" "$new_title".wav
+    lame "$new_title".wav "$new_title".mp3
+
+    rm "$filename"
+    rm "$new_title".wav
+fi

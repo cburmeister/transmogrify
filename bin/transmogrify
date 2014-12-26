@@ -11,7 +11,12 @@ if [[ $1 =~ v=(.*) ]]; then
     filename=$(youtube-dl --get-filename $1)
     title=${filename%.*}
 
-    youtube-dl $1
-    ffmpeg -i "$filename" "$title".wav && rm "$filename"
-    lame "$title".wav "$title".mp3 && rm "$title".wav
+    echo "----> Downloading video from YouTube"
+    youtube-dl -q $1
+
+    echo "----> Ripping audio from video"
+    ffmpeg -loglevel quiet -i "$filename" "$title".wav && rm "$filename"
+
+    echo "----> Encoding audio to mp3"
+    lame --quiet "$title".wav "$title".mp3 && rm "$title".wav
 fi
